@@ -17,7 +17,7 @@
           <td>{{ statue.price }}</td>
           <td>
             <button @click="deleteStatue(statue.id)">Törlés</button>
-            <button>Szerkesztés</button>
+            <button @click="editStatue(statue.id)">Szerkesztés</button>
           </td>
         </tr>
         <tr>
@@ -96,6 +96,29 @@ export default {
       })
       console.log(Response)
       await this.loadStatue()
+    },
+    async editStatue(id) {
+      let Response = await fetch(`http://127.0.0.1:8000/api/statues/${id}`)
+      let data = await Response.json()
+      this.statue = {...data};
+      this.mod_new = false
+    },
+    async saveStatue() {
+      this.saving='disabled'
+     await fetch(`http://127.0.0.1:8000/api/statues/${this.statue.id}`, {
+       method: 'PATCH',
+       headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       },
+       body: JSON.stringify(this.statue) 
+     })
+     await this.loadStatue()
+     this.saving=false
+     this.resetForm()
+    },
+    cancelEdit () {
+      this.resetForm()
     },
   },
   mounted() {
