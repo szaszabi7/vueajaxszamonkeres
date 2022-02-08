@@ -1,44 +1,49 @@
 <template>
-  <div id="app">
-    <h1>Statues</h1>
-    <table style="margin-left: auto; margin-right: auto;">
-      <thead>
-        <tr>
-          <th>Személy</th>
-          <th>Magasság</th>
-          <th>Ár</th>
-          <th>Műveletek</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="statue in statues" v-bind:key="statue.id">
-          <td>{{ statue.person }}</td>
-          <td>{{ statue.height }}</td>
-          <td>{{ statue.price }}</td>
-          <td>
-            <button @click="deleteStatue(statue.id)">Törlés</button>
-            <button @click="editStatue(statue.id)">Szerkesztés</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="hidden" v-model="statue.id">
-            <input type="text" v-model="statue.person">
-          </td>
-          <td>
-            <input type="number" v-model="statue.height">
-          </td>
-          <td>
-            <input type="number" v-model="statue.price">
-          </td>
-          <td>
-            <button v-if="mod_new" @click="newStatue" :disabled="saving">Létrehoz</button>
-            <button v-if="!mod_new" @click="saveStatue" :disabled="saving">Mentés</button>
-            <button v-if="!mod_new" @click="cancelEdit" :disabled="saving">Mégse</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="container">
+    <div class="d-flex justify-content-center mt-4">
+      <h1 class="text-white ">Statues</h1>
+    </div>
+    <div id="app" class="d-flex justify-content-center mt-1">
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Személy</th>
+            <th>Magasság</th>
+            <th>Ár</th>
+            <th>Műveletek</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="statue in statues" v-bind:key="statue.id">
+            <td>{{ statue.person }}</td>
+            <td>{{ statue.height }}</td>
+            <td>{{ statue.price }}</td>
+            <td>
+              <button @click="deleteStatue(statue.id)" class="btn btn-danger me-1">Törlés</button>
+              <button @click="editStatue(statue.id)" class="btn btn-info">Szerkesztés</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="hidden" v-model="statue.id">
+              <input type="text" placeholder="Név" class="form-control" v-model="statue.person">
+            </td>
+            <td>
+              <input type="number" placeholder="Magasság" class="form-control" v-model="statue.height">
+            </td>
+            <td>
+              <input type="number" placeholder="Ár" class="form-control" v-model="statue.price">
+            </td>
+            <td>
+              <button v-if="mod_new" @click="newStatue" :disabled="saving" class="btn btn-success me-1">Létrehoz</button>
+              <button v-if="mod_new" @click="cancelEdit" :disabled="saving" class="btn btn-danger">Mégse</button>
+              <button v-if="!mod_new" @click="saveStatue" :disabled="saving" class="btn btn-success me-1">Mentés</button>
+              <button v-if="!mod_new" @click="cancelEdit" :disabled="saving" class="btn btn-danger">Mégse</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
